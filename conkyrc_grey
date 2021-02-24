@@ -1,0 +1,96 @@
+conky.config = {
+
+background = true,
+update_interval = 5,
+
+cpu_avg_samples = 2,
+net_avg_samples = 2,
+temperature_unit = 'celsius',
+
+double_buffer = true,
+no_buffers = true,
+text_buffer_size = 2048,
+
+gap_x = 15,
+gap_y = 100,
+minimum_width = 260, minimum_height = 450,
+maximum_width = 260,
+own_window = true,
+--## me change, added next 2 lines
+--## own_window_type override
+own_window_type = 'normal',
+own_window_transparent = true,
+own_window_argb_visual = true,
+own_window_hints = 'undecorated,sticky,skip_taskbar,skip_pager,below',
+own_window_argb_value = 0,
+own_window_colour = '000000',
+border_inner_margin = 0,
+border_outer_margin = 0,
+alignment = 'top_right',
+
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+draw_graph_borders = false,
+
+override_utf8_locale = true,
+use_xft = true,
+font = 'Open Sans:normal:size=9',
+xftalpha = 1.0,
+
+default_color = 'FFFFFF',
+color1 = 'FFFFFF',
+color2 = 'FFFFFF',
+color3 = 'FFFFFF',
+color4 = 'FFFFFF',
+
+lua_load = '~/.conky/conky_grey_redux/conky_grey.lua',
+lua_draw_hook_post = 'main',
+lua_draw_hook_pre = 'background',
+};
+
+conky.text = [[
+
+${image ~/.conky/conky_grey_redux/tux.png -p 15,30 -s 50x50}
+# ${goto 15}${font ConkySymbols:size=40}A${font}
+# ${voffset -55}
+${goto 75}${font Open Sans:bold:size=13}System Info${font}
+${goto 75}${font Open Sans:bold:size=9}Kernel ${alignr 25}${font}${kernel}
+${goto 75}${font Open Sans:bold:size=9}Gnome ${alignr 25}${font}${execi 999999 gnome-shell --version | sed 's/\GNOME Shell //g'}
+${goto 75}${font Open Sans:bold:size=9}Load ${alignr 25}${font}${loadavg}
+${voffset 10}
+${goto 75}${font Open Sans:bold:size=13}CPU${font}
+${goto 75}${top name 1}${alignr}${offset -25}${top cpu 1}%
+${goto 75}${top name 2}${alignr}${offset -25}${top cpu 2}%
+${goto 75}${top name 3}${alignr}${offset -25}${top cpu 3}%
+${goto 75}${font Open Sans:bold:size=9}Processes${font}${alignr}${offset -25}$processes
+${voffset 10}
+${goto 75}${font Open Sans:bold:size=13}Memory${font}
+${goto 75}${top_mem name 1}${alignr}${offset -25}${top_mem mem_res 1}
+${goto 75}${top_mem name 2}${alignr}${offset -25}${top_mem mem_res 2}
+${goto 75}${top_mem name 3}${alignr}${offset -25}${top_mem mem_res 3}
+${voffset 10}
+${goto 75}${font Open Sans:bold:size=13}Storage${font}
+${goto 75}${font Open Sans:bold:size=9}/${font}${alignr}${offset -25}${fs_used /} (${fs_used_perc /}%)
+${goto 75}${voffset 5}${font Open Sans:bold:size=9}/home${font}${alignr}${offset -25}${fs_used /home} (${fs_used_perc /home}%)
+${voffset 10}
+${goto 75}${font Open Sans:bold:size=13}NET${font}${alignr}${offset -25}
+${goto 75}${font Open Sans:bold:size=9}DNS${font}${alignr}${offset -25}${execi 600 systemd-resolve --status | grep "DNS Servers:" | awk '{ print $3 }'}
+${goto 15}${upspeedgraph eth0 12,50 000000 000000 -t}${goto 75}${font Open Sans:bold:size=9}Uplink${font}${alignr 25}${upspeed eth0}
+${goto 15}${downspeedgraph eth0 12,50 000000 000000 -t}${goto 75}${font Open Sans:bold:size=9}Downlink${font}${alignr 25}${downspeed eth0}
+${voffset 10}${image ~/.conky/conky_grey_redux/temp.png -p 15,485 -s 50x50}
+${goto 75}${font Open Sans:bold:size=13}Temps${font}${alignr}${offset -25}
+${goto 75}${font Open Sans:bold:size=9}CPU${font}${alignr}${offset -25}${hwmon 2 temp 1}°C
+${goto 75}${font Open Sans:bold:size=9}GPU${font}${alignr}${offset -25}${nvidia gputemp}°C
+${goto 75}${font Open Sans:bold:size=9}SSD (sata)${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d OCZ_TRION100_75TB515JKMBX | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
+${goto 75}${font Open Sans:bold:size=9}Storage-1${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST2000DM001_9YN164_Z1E2H4LB | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
+${goto 75}${font Open Sans:bold:size=9}Storage-2${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST2000DM001_9YN164_Z1E2HX1X | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
+${goto 75}${font Open Sans:bold:size=9}Old Storage${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST3500320AS_9QM49N2W | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
+
+]];
+
+
+-- TODO:
+-- iowait
+-- disk usage
+-- top io processes
