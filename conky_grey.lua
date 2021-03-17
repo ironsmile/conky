@@ -346,7 +346,7 @@ function conky_main()
     local updates = conky_parse('${updates}')
     update_num = tonumber(updates)
     
-    if update_num > 5 then
+    if update_num > 1 then
         go_gauge_rings(display)
     end
 	      
@@ -386,5 +386,3 @@ function conky_background()
     cairo_surface_destroy(cs)
     cairo_destroy(display)
 end
-
-

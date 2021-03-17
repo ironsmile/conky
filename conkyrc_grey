@@ -9,11 +9,11 @@ temperature_unit = 'celsius',
 
 double_buffer = true,
 no_buffers = true,
-text_buffer_size = 2048,
+text_buffer_size = 1024,
 
 gap_x = 15,
 gap_y = 100,
-minimum_width = 260, minimum_height = 450,
+minimum_width = 260, minimum_height = 740,
 maximum_width = 260,
 own_window = true,
 --## me change, added next 2 lines
@@ -52,8 +52,6 @@ lua_draw_hook_pre = 'background',
 conky.text = [[
 
 ${image ~/.conky/conky_grey_redux/tux.png -p 15,30 -s 50x50}
-# ${goto 15}${font ConkySymbols:size=40}A${font}
-# ${voffset -55}
 ${goto 75}${font Open Sans:bold:size=13}System Info${font}
 ${goto 75}${font Open Sans:bold:size=9}Kernel ${alignr 25}${font}${kernel}
 ${goto 75}${font Open Sans:bold:size=9}Gnome ${alignr 25}${font}${execi 999999 gnome-shell --version | sed 's/\GNOME Shell //g'}
@@ -86,11 +84,16 @@ ${goto 75}${font Open Sans:bold:size=9}SSD (sata)${font}${alignr}${offset -25}${
 ${goto 75}${font Open Sans:bold:size=9}Storage-1${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST2000DM001_9YN164_Z1E2H4LB | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
 ${goto 75}${font Open Sans:bold:size=9}Storage-2${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST2000DM001_9YN164_Z1E2HX1X | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
 ${goto 75}${font Open Sans:bold:size=9}Old Storage${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST3500320AS_9QM49N2W | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
-
+${voffset 10}
+${goto 75}${font Open Sans:bold:size=13}Disk IO${font}${alignr}${offset -25}
+${goto 75}${font Open Sans:bold:size=9}Read${font}${alignr}${offset -25}${diskio_read}
+${goto 75}${font Open Sans:bold:size=9}Write${font}${alignr}${offset -25}${diskio_write}
+${goto 75}${top_io name 1}${alignr}${offset -25}${top_io io_perc 1}%
+${goto 75}${top_io name 2}${alignr}${offset -25}${top_io io_perc 2}%
+${goto 75}${top_io name 3}${alignr}${offset -25}${top_io io_perc 3}%
 ]];
 
 
 -- TODO:
 -- iowait
--- disk usage
--- top io processes
+-- S.M.A.R.T. status
