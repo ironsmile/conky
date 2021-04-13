@@ -81,16 +81,23 @@ ${goto 75}${font Open Sans:bold:size=13}Temps${font}${alignr}${offset -25}
 ${goto 75}${font Open Sans:bold:size=9}CPU${font}${alignr}${offset -25}${hwmon 2 temp 1}°C
 ${goto 75}${font Open Sans:bold:size=9}GPU${font}${alignr}${offset -25}${nvidia gputemp}°C
 ${goto 75}${font Open Sans:bold:size=9}SSD (sata)${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d OCZ_TRION100_75TB515JKMBX | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
-${goto 75}${font Open Sans:bold:size=9}Storage-1${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST2000DM001_9YN164_Z1E2H4LB | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
-${goto 75}${font Open Sans:bold:size=9}Storage-2${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST2000DM001_9YN164_Z1E2HX1X | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
+# ${goto 75}${font Open Sans:bold:size=9}Storage-1${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST2000DM001_9YN164_Z1E2H4LB | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
+# ${goto 75}${font Open Sans:bold:size=9}Storage-2${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST2000DM001_9YN164_Z1E2HX1X | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
 ${goto 75}${font Open Sans:bold:size=9}Old Storage${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST3500320AS_9QM49N2W | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
+${goto 75}${font Open Sans:bold:size=9}UPS${font}${alignr 25}${execi 10 upsc powerwalker 2>/dev/null | grep ups.temperature: | awk '{ print ($2-int($2)<0.499)?int($2):int($2)+1 }' }°C
 ${voffset 10}
 ${goto 75}${font Open Sans:bold:size=13}Disk IO${font}${alignr}${offset -25}
-${goto 75}${font Open Sans:bold:size=9}Read${font}${alignr}${offset -25}${diskio_read}
-${goto 75}${font Open Sans:bold:size=9}Write${font}${alignr}${offset -25}${diskio_write}
+${goto 15}${diskiograph_read 12,50 000000 000000 -t}${goto 75}${font Open Sans:bold:size=9}Read${font}${alignr}${offset -25}${diskio_read}
+${goto 15}${diskiograph_write 12,50 000000 000000 -t}${goto 75}${font Open Sans:bold:size=9}Write${font}${alignr}${offset -25}${diskio_write}
 ${goto 75}${top_io name 1}${alignr}${offset -25}${top_io io_perc 1}%
 ${goto 75}${top_io name 2}${alignr}${offset -25}${top_io io_perc 2}%
 ${goto 75}${top_io name 3}${alignr}${offset -25}${top_io io_perc 3}%
+${voffset 10}
+${goto 75}${font Open Sans:bold:size=13}UPS${font}
+${goto 75}${font Open Sans:bold:size=9}Battery${font}${alignr 25}${execi 10 upsc powerwalker 2>/dev/null | grep battery.charge | awk '{ print $2 }'}%
+${goto 75}${font Open Sans:bold:size=9}Voltage (in)${font}${alignr 25}${execi 10 upsc powerwalker 2>/dev/null | grep input.voltage: | awk '{ print $2 }'}V
+${goto 75}${font Open Sans:bold:size=9}Voltage (out)${font}${alignr 25}${execi 10 upsc powerwalker 2>/dev/null | grep output.voltage: | awk '{ print $2 }'}V
+${goto 75}${font Open Sans:bold:size=9}Beeper${font}${alignr 25}${execi 10 upsc powerwalker 2>/dev/null | grep ups.beeper.status: | awk '{ print $2 }'}
 ]];
 
 
