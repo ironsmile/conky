@@ -12,7 +12,7 @@ no_buffers = true,
 text_buffer_size = 1024,
 
 gap_x = 15,
-gap_y = 100,
+gap_y = 40,
 minimum_width = 260, minimum_height = 740,
 maximum_width = 260,
 own_window = true,
@@ -80,7 +80,8 @@ ${voffset 10}${image ~/.conky/conky_grey_redux/temp.png -p 15,485 -s 50x50}
 ${goto 75}${font Open Sans:bold:size=13}Temps${font}${alignr}${offset -25}
 ${goto 75}${font Open Sans:bold:size=9}CPU${font}${alignr}${offset -25}${hwmon 2 temp 1}°C
 ${goto 75}${font Open Sans:bold:size=9}GPU${font}${alignr}${offset -25}${nvidia gputemp}°C
-${goto 75}${font Open Sans:bold:size=9}SSD (sata)${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d OCZ_TRION100_75TB515JKMBX | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
+${goto 75}${font Open Sans:bold:size=9}SSD (sata OCZ)${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d OCZ_TRION100_75TB515JKMBX | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
+${goto 75}${font Open Sans:bold:size=9}SSD (sata Sams)${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d Samsung_SSD_860_EVO_1TB_S3Z9NB0NB16154A | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
 ${goto 75}${font Open Sans:bold:size=9}SSD (nvme)${font}${alignr}${offset -25}${execi 60 grep 'Temperature Sensor' /var/log/nvme0n1.smart.log | awk '{ print $5 }' | sed 'N;s/\n/\//'}°C
 # ${goto 75}${font Open Sans:bold:size=9}Storage-1${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST2000DM001_9YN164_Z1E2H4LB | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
 # ${goto 75}${font Open Sans:bold:size=9}Storage-2${font}${alignr}${offset -25}${execi 10 echo $(udisksctl info -d ST2000DM001_9YN164_Z1E2HX1X | grep Temp | awk '{ print $2 }') - 273.15 | bc | sed -E 's/\..+//'}°C
@@ -99,9 +100,14 @@ ${goto 75}${font Open Sans:bold:size=9}Battery${font}${alignr 25}${execi 10 upsc
 ${goto 75}${font Open Sans:bold:size=9}Voltage (in)${font}${alignr 25}${execi 10 upsc powerwalker input.voltage 2>/dev/null}V
 ${goto 75}${font Open Sans:bold:size=9}Voltage (out)${font}${alignr 25}${execi 10 upsc powerwalker output.voltage 2>/dev/null}V
 ${goto 75}${font Open Sans:bold:size=9}Beeper${font}${alignr 25}${execi 10 upsc powerwalker ups.beeper.status 2>/dev/null}
+${voffset 10}
+${goto 75}${font Open Sans:bold:size=13}S.M.A.R.T.${font}
+${goto 75}${font Open Sans:bold:size=9}SSD (OCZ)${font}${alignr}${offset -25}${execi 60 echo $(cat /var/log/smart-status.sdc)}
+${goto 75}${font Open Sans:bold:size=9}SSD (Sams)${font}${alignr}${offset -25}${execi 60 echo $(cat /var/log/smart-status.sda)}
+${goto 75}${font Open Sans:bold:size=9}SSD (nvme)${font}${alignr}${offset -25}${execi 60 echo $(cat /var/log/smart-status.nvme0n1)}
+${goto 75}${font Open Sans:bold:size=9}Old Storage${font}${alignr}${offset -25}${execi 60 echo $(cat /var/log/smart-status.sdb)}
 ]];
 
 
 -- TODO:
 -- iowait
--- S.M.A.R.T. status
