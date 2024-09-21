@@ -15,7 +15,7 @@ gauge = {
 {
     name='cpu',                    arg='cpu0',
     max_value=100,
-    x=40,                          y=150,
+    x=40,                          y=170,
     graph_radius=24,
     graph_thickness=5,
     graph_start_angle=180,
@@ -57,7 +57,7 @@ gauge = {
 },--]]
 {
     name='memperc',                arg='',                      max_value=100,
-    x=40,                          y=255,
+    x=40,                          y=285,
     graph_radius=24,
     graph_thickness=5,
     graph_start_angle=180,
@@ -78,7 +78,7 @@ gauge = {
 },
 {
     name='fs_used_perc',           arg='/',                     max_value=100,
-    x=40,                          y=345,
+    x=40,                          y=385,
     graph_radius=24,
     graph_thickness=5,
     graph_start_angle=180,

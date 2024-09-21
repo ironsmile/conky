@@ -51,7 +51,7 @@ lua_draw_hook_pre = 'background',
 
 conky.text = [[
 
-${image ~/.conky/conky_grey_redux/tux.png -p 15,30 -s 50x50}
+${image ~/.conky/conky_grey_redux/tux.png -p 15,40 -s 50x50}
 ${goto 75}${font Open Sans:bold:size=13}System Info${font}
 ${goto 75}${font Open Sans:bold:size=9}Kernel ${alignr 25}${font}${kernel}
 ${goto 75}${font Open Sans:bold:size=9}Gnome ${alignr 25}${font}${execi 999999 gnome-shell --version | sed 's/\GNOME Shell //g'}
@@ -76,7 +76,7 @@ ${goto 75}${font Open Sans:bold:size=13}NET${font}${alignr}${offset -25}
 ${goto 75}${font Open Sans:bold:size=9}DNS${font}${alignr}${offset -25}${execi 600 systemd-resolve --status | grep "DNS Servers:" | awk '{ print $3 }'}
 ${goto 15}${upspeedgraph enp10s0 12,50 000000 000000 -t}${goto 75}${font Open Sans:bold:size=9}Uplink${font}${alignr 25}${upspeed enp10s0}
 ${goto 15}${downspeedgraph enp10s0 12,50 000000 000000 -t}${goto 75}${font Open Sans:bold:size=9}Downlink${font}${alignr 25}${downspeed enp10s0}
-${voffset 10}${image ~/.conky/conky_grey_redux/temp.png -p 15,485 -s 50x50}
+${voffset 10}${image ~/.conky/conky_grey_redux/temp.png -p 15,545 -s 50x50}
 ${goto 75}${font Open Sans:bold:size=13}Temps${font}${alignr}${offset -25}
 ${goto 75}${font Open Sans:bold:size=9}CPU${font}${alignr}${offset -25}${hwmon 2 temp 1}°C
 # ${goto 75}${font Open Sans:bold:size=9}GPU${font}${alignr}${offset -25}${nvidia gputemp}°C
@@ -95,12 +95,14 @@ ${goto 75}${top_io name 1}${alignr}${offset -25}${top_io io_perc 1}%
 ${goto 75}${top_io name 2}${alignr}${offset -25}${top_io io_perc 2}%
 ${goto 75}${top_io name 3}${alignr}${offset -25}${top_io io_perc 3}%
 ${voffset 10}
+${image ~/.conky/conky_grey_redux/battery.png -p 15,830 -s 50x50}
 ${goto 75}${font Open Sans:bold:size=13}UPS${font}
 ${goto 75}${font Open Sans:bold:size=9}Battery${font}${alignr 25}${execi 10 upsc powerwalker battery.charge 2>/dev/null}%
 ${goto 75}${font Open Sans:bold:size=9}Voltage (in)${font}${alignr 25}${execi 10 upsc powerwalker input.voltage 2>/dev/null}V
 ${goto 75}${font Open Sans:bold:size=9}Voltage (out)${font}${alignr 25}${execi 10 upsc powerwalker output.voltage 2>/dev/null}V
 ${goto 75}${font Open Sans:bold:size=9}Beeper${font}${alignr 25}${execi 10 upsc powerwalker ups.beeper.status 2>/dev/null}
 ${voffset 10}
+${image ~/.conky/conky_grey_redux/disk.png -p 15,965 -s 50x50}
 ${goto 75}${font Open Sans:bold:size=13}S.M.A.R.T.${font}
 ${goto 75}${font Open Sans:bold:size=9}SSD (OCZ)${font}${alignr}${offset -25}${execi 60 echo $(cat /var/log/smart-status.sda)}
 ${goto 75}${font Open Sans:bold:size=9}SSD (Sams)${font}${alignr}${offset -25}${execi 60 echo $(cat /var/log/smart-status.sdb)}
